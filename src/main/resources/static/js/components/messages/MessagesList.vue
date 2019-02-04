@@ -8,19 +8,26 @@
 </template>
 
 <script>
-    import MessageRow from "components/messages/MessageRow.vue"
-    import MessageForm from "components/messages/MessageForm.vue"
+    import MessageRow from 'components/messages/MessageRow.vue'
+    import MessageForm from 'components/messages/MessageForm.vue'
 
     export default {
         components: {
             MessageRow,
             MessageForm,
         },
-        props: ['messages'],
         data(){
             return {
+                messages: [],
                 message: null
             }
+        },
+        created(){
+            this.$resource('/messages').get()
+                .then(res =>
+                    res.json().then(
+                        data => this.messages = data
+                    ))
         },
         computed: {
             sortedMessages() {

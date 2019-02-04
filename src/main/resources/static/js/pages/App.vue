@@ -2,29 +2,22 @@
     <v-app>
         <v-toolbar app>
             <v-toolbar-title>Help Desk</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-toolbar-items class="hidden-sm-and-down">
+                <v-btn flat to="/messages">Messages</v-btn>
+                <v-btn flat to="/">Home</v-btn>
+            </v-toolbar-items>
         </v-toolbar>
         <v-content>
             <v-container fluid>
-                <messages-list :messages="messages"></messages-list>
+                <router-view></router-view>
             </v-container>
         </v-content>
     </v-app>
 </template>
 
 <script>
-    import MessagesList from 'components/messages/MessagesList.vue'
-
     export default {
-        components: {
-            MessagesList
-        },
-        created(){
-            this.$resource('/messages').get()
-                .then(res =>
-                    res.json().then(
-                        data => this.messages = data
-                    ))
-        },
         data() {
             return {
                 messages: [],
