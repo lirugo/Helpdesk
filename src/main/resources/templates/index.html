@@ -1,17 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="hhtp://www.thyemeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Helpdesk</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
     <link href="https://fonts.googleapis.com/css?family=Material+Icons" rel="stylesheet">
+    <script th:inline="javascript">
+        var frontendData = [[${frontendData}]];
+    </script>
 </head>
 <body>
-    <h3>Index page</h3>
     <div id="app">
-        <a href="/login">Login page</a>
-        <a href="/registration">Registration page</a>
     </div>
+
 <script src="http://localhost:8080/main.js"></script>
 </body>
 </html>

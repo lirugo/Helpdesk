@@ -6,6 +6,9 @@
             <v-toolbar-items class="hidden-sm-and-down">
                 <v-btn flat to="/messages">Messages</v-btn>
                 <v-btn flat to="/">Home</v-btn>
+
+                <v-btn flat v-if="!profile"><a href="/login">Login</a></v-btn>
+                <v-btn flat v-else><a href="/logout">Logout</a></v-btn>
             </v-toolbar-items>
         </v-toolbar>
         <v-content>
@@ -21,7 +24,7 @@
         data() {
             return {
                 messages: [],
-                profile: {},
+                profile: frontendData.profile,
             }
         }
     }

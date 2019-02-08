@@ -1,60 +1,75 @@
 package com.helpdesk.domain.user;
 
-import javax.persistence.*;
-import java.util.Set;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "usr")
 public class User {
-
     @Id
-    @GeneratedValue
-    private Long id;
-    private String username;
-    private String password;
-    private boolean active;
-    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
-    @Enumerated(EnumType.STRING)
-    private Set<Role> roles;
+    private String id;
+    private String name;
+    private String userpic;
+    private String email;
+    private String gender;
+    private String locale;
+    private LocalDateTime lastVisit;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getPassword() {
-        return password;
+    public String getUserpic() {
+        return userpic;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUserpic(String userpic) {
+        this.userpic = userpic;
     }
 
-    public boolean isActive() {
-        return active;
+    public String getEmail() {
+        return email;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public String getGender() {
+        return gender;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getLocale() {
+        return locale;
+    }
+
+    public void setLocale(String locale) {
+        this.locale = locale;
+    }
+
+    public LocalDateTime getLastVisit() {
+        return lastVisit;
+    }
+
+    public void setLastVisit(LocalDateTime lastVisit) {
+        this.lastVisit = lastVisit;
     }
 }

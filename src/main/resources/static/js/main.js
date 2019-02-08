@@ -13,5 +13,5 @@ Vue.use(VueResource)
 new Vue({
     el: '#app',
     router,
-    render: a => a(App)
+    render: a => a(App),
 })
