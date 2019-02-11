@@ -1,9 +1,11 @@
 package com.helpdesk.controller;
 
 import com.helpdesk.domain.Message;
+import com.helpdesk.domain.user.User;
 import com.helpdesk.repo.MessageRepo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -31,8 +33,12 @@ public class MessageController {
     }
 
     @PostMapping
-    public Message create(@RequestBody Message message) {
-//        message.setCreationDate(LocalDateTime.now());
+    public Message store(
+            @AuthenticationPrincipal User user,
+            @RequestBody Message message
+    ) {
+        message.setAuthor(user);
+        message.setCreationDate(LocalDateTime.now());
         return messageRepo.save(message);
     }
 

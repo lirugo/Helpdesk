@@ -1,6 +1,7 @@
 package com.helpdesk.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.helpdesk.domain.user.User;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -16,9 +17,13 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String text;
-//    @Column(updatable = false)
-//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-//    private LocalDateTime creationDate;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User author;
+
+    @Column(updatable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
+    private LocalDateTime creationDate;
 
     public Long getId() {
         return id;
@@ -34,5 +39,21 @@ public class Message {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
+    }
+
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
     }
 }
