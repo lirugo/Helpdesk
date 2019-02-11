@@ -4,6 +4,7 @@
             <v-toolbar-title>Help Desk</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items class="hidden-sm-and-down">
+                <v-btn flat to="/users">Users</v-btn>
                 <v-btn flat v-if="profile" to="/messages">Messages</v-btn>
                 <v-btn flat to="/">Home</v-btn>
 

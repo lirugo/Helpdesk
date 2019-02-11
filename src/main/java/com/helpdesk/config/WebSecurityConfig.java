@@ -1,5 +1,6 @@
 package com.helpdesk.config;
 
+import com.helpdesk.domain.user.Role;
 import com.helpdesk.domain.user.User;
 import com.helpdesk.repo.user.UserRepo;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
@@ -11,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
@@ -41,6 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 newUser.setGender((String) map.get("gender"));
                 newUser.setLocale((String) map.get("locale"));
                 newUser.setUserpic((String) map.get("picture"));
+                newUser.setRoles(Collections.singleton(Role.USER));
 
                 return newUser;
             });
