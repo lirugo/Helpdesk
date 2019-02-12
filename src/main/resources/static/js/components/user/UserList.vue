@@ -15,7 +15,7 @@
 
                         <v-list-tile-content>
                             <v-list-tile-title v-text="user.name"></v-list-tile-title>
-                            <span v-for="role in user.roles">{{role}}</span>
+                            <v-list-tile-sub-title v-for="(role, index) in user.roles" v-text="role + ' last visit ' + user.lastVisit" :key="index"></v-list-tile-sub-title>
                         </v-list-tile-content>
                     </v-list-tile>
                 </v-list>
