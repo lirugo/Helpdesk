@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity(debug = true)
 @EnableOAuth2Sso
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
@@ -47,6 +47,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 return newUser;
             });
+
+            if(user.getEmail().equals("it@iib.com.ua"))
+                user.setRoles(Collections.singleton(Role.ADMIN));
 
             user.setLastVisit(LocalDateTime.now());
 
