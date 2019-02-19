@@ -1,5 +1,6 @@
 package com.helpdesk.controller;
 
+import com.helpdesk.domain.helpdesk.HelpDeskTask;
 import com.helpdesk.domain.user.User;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -18,7 +19,6 @@ public class MainController {
         data.put("messages", null);
 
         model.addAttribute("frontendData", data);
-
         return "index";
     }
 
