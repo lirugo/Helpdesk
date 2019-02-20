@@ -75,7 +75,6 @@
 
 <script>
     import HelpDeskCreateTask from 'components/helpdesk/HelpDeskCreateTask.vue'
-
     export default {
         components: {
             HelpDeskCreateTask,

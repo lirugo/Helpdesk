@@ -5,11 +5,13 @@
                     :color="cardColor">
                 <v-card-text class="pb-0">
                     <v-container grid-list-md pb-0>
-                        <span class="headline justify-center">Create new appeal to Help Desk</span>
                         <v-layout wrap>
+                            <span class="headline">Create new appeal to Help Desk</span>
                             <!--Title-->
                             <v-flex xs12>
                                 <v-text-field label="Title" required
+                                              v-model="task.title"
+                                              name="title"
                                               hint="Write title for your problem"
                                               counter="100"
                                 ></v-text-field>
@@ -17,6 +19,7 @@
                             <!--Description-->
                             <v-flex xs12>
                                 <v-textarea
+                                        v-model="task.description"
                                         name="description"
                                         label="Description"
                                         hint="Describe your problem completely"
@@ -29,7 +32,9 @@
                             <v-flex xs12 sm4>
                                 <v-select
                                         v-model="task.priority"
-                                        :items="['Low', 'Medium', 'High']"
+                                        :items="priority"
+                                        item-value="id"
+                                        item-text="name"
                                         label="Priority"
                                         name="priority"
                                         required
@@ -38,7 +43,10 @@
                             <!--Problem with-->
                             <v-flex xs12 sm4>
                                 <v-select
-                                        :items="['PC', 'Printer', 'Phone', 'Network', 'WI-FI']"
+                                        v-model="task.problemWith"
+                                        :items="problemDevices"
+                                        item-value="id"
+                                        item-text="name"
                                         label="Problem with"
                                         name="problem_with"
                                         required
@@ -58,12 +66,12 @@
                                 >
                                     <v-text-field
                                             slot="activator"
-                                            v-model="desire_date_of_completion"
-                                            label="Desired date of completion"
+                                            :value="dateCompletionFormatted"
+                                            label="Desired date of execution"
                                             readonly
                                     ></v-text-field>
                                     <v-date-picker
-                                            v-model="desire_date_of_completion"
+                                            v-model="task.desireDateOfExecution"
                                             @input="showDatePicker = !showDatePicker"
                                     ></v-date-picker>
                                 </v-menu>
@@ -75,7 +83,7 @@
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="blue darken-1" flat @click="dialog = false">Close</v-btn>
-                    <v-btn color="blue darken-1" flat @click="dialog = false">Save</v-btn>
+                    <v-btn color="blue darken-1" flat @click="store">Save</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -83,35 +91,56 @@
 </template>
 
 <script>
+    import moment from 'moment'
+
     export default {
         props: ['openCreateTaskDialog'],
-        watch: {
-            openCreateTaskDialog(){
-                this.dialog = this.openCreateTaskDialog
-            }
-        },
         data: function() {
             return {
                 dialog: this.openCreateTaskDialog,
-                desire_date_of_completion: new Date().toISOString().substr(0, 10),
                 showDatePicker: false,
+                problemDevices: [
+                    { id: 0, name: 'PC' },
+                    { id: 1, name: 'Printer' },
+                    { id: 2, name: 'Phone' },
+                    { id: 3, name: 'Ethernet' },
+                    { id: 4, name: 'Wi-Fi' },
+                ],
+                priority: [
+                    { id: 0, name: 'Low' },
+                    { id: 1, name: 'Medium' },
+                    { id: 2, name: 'High' },
+                ],
                 task: {
+                    title: '',
+                    description: '',
                     priority: '',
+                    problemWith: '',
+                    desireDateOfExecution: new Date().toISOString().substr(0, 10),
                 },
                 cardColor: 'white',
             };
         },
-        watch:{
-            task: {
-                handler: function() {
-                    if(this.task.priority === 'Low')
-                        this.cardColor = 'white'
-                    if(this.task.priority === 'Medium')
-                        this.cardColor = 'orange lighten-2'
-                    if(this.task.priority === 'High')
-                        this.cardColor = 'deep-orange lighten-2'
-                },
-                deep: true
+        watch: {
+            openCreateTaskDialog(){
+                this.dialog = this.openCreateTaskDialog
+            },
+        },
+        computed: {
+            dateCompletionFormatted() {
+                return this.task.desireDateOfExecution ? moment(this.task.desireDateOfExecution).format('DD-MM-YYYY') : ''
+            },
+        },
+        methods: {
+            store(){
+                this.$resource('/api/helpdesk/store').save({}, this.task)
+                    .then(res => {
+                        console.log(res)
+                    })
+                    .finally(() => {
+                        this.dialog = false
+                    })
+
             }
         }
     }
