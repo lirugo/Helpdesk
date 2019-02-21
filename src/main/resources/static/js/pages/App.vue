@@ -35,6 +35,7 @@
 <script>
     import NavDrawer from 'components/_includes/menu/NavDrawer.vue'
     import Snackbar from 'components/_includes/notif/Snackbar.vue'
+    import {mapActions} from "vuex";
 
     export default {
         components: {
@@ -46,6 +47,10 @@
                 messages: [],
                 profile: frontendData.profile,
             }
+        },
+        methods: mapActions(['getHelpDeskTasksAction']),
+        created(){
+            this.$store.dispatch('getHelpDeskTasksAction')
         }
     }
 </script>

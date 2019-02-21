@@ -11,6 +11,7 @@ import router from 'router/router'
 
 Vue.use(Vuetify)
 Vue.use(VueResource)
+Vue.use(require('vue-moment'))
 
 new Vue({
     el: '#app',

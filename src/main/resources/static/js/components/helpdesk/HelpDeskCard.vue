@@ -4,7 +4,7 @@
         <v-card-title class="pb-0">
             <div>
                 <h3 class="headline" v-text="task.title"></h3>
-                <span class="grey--text">{{task.createdAt}}</span><br>
+                <span class="grey--text">{{task.createdAt | moment('DD-MM-YYYY')}}</span><br>
                 <span v-text="task.description"></span>
             </div>
         </v-card-title>
@@ -46,8 +46,6 @@
 </template>
 
 <script>
-    import moment from 'moment'
-
     export default {
         props: ['task'],
     }

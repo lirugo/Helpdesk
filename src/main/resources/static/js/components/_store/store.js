@@ -11,7 +11,11 @@ export default new Vuex.Store({
             color: '',
             timeout: 6000,
             text: 'Hello, I\'m a snackbar'
-        }
+        },
+        helpDeskTasks: [],
+    },
+    getters: {
+        sortedHelpDeskTasks: state => state.helpDeskTasks.sort((a,b) => -(a.id -b.id))
     },
     mutations: {
         setSnackbarMutation(state, snackbar) {
@@ -19,9 +23,23 @@ export default new Vuex.Store({
                 ...state.snackbar,
                 snackbar
             ]
+        },
+        getHelpDeskTasksMutation(state, helpDeskTasks) {
+            state.helpDeskTasks = helpDeskTasks
         }
     },
     actions: {
+        getHelpDeskTasksAction({ commit }){
+            return new Promise((resolve, reject) => {
+                Vue.http.get("/api/helpdesk/")
+                    .then((response) => {
+                        commit("getHelpDeskTasksMutation", response.body);
+                    })
+                    .catch((error => {
+                        console.log(error.statusText);
+                    }));
+            });
+        }
     }
 
 })
