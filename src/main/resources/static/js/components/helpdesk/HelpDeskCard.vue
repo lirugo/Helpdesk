@@ -28,9 +28,18 @@
 
         <!--Chips-->
         <div class="ml-3">
+            <!--Status-->
+            <v-chip label color="gray" outline text-color="green" v-if="task.done">
+                <v-icon left>done_outline</v-icon>DONE
+            </v-chip>
+            <v-chip label color="gray" outline text-color="gray" v-else>
+                <v-icon left>refresh</v-icon>IN PROGRESS
+            </v-chip>
+            <!--Priority-->
             <v-chip label color="orange darken-3" outline text-color="orange darken-3">
                 <v-icon left>error</v-icon>{{task.priority}}
             </v-chip>
+            <!--Device-->
             <v-chip label color="gray" outline text-color="gray">
                 <v-icon left>perm_device_information</v-icon>{{task.problemWith}}
             </v-chip>
