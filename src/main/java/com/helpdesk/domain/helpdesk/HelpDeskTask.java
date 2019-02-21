@@ -34,7 +34,6 @@ public class HelpDeskTask {
     private HelpDeskProblem problemWith;
 
     @Column(updatable = false, name = "desire_date_of_execution")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date desireDateOfExecution;
 
     @CreatedDate

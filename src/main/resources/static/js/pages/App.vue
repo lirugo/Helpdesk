@@ -26,16 +26,20 @@
                 <router-view></router-view>
             </v-container>
         </v-content>
+
+        <!--Notification Snackbar-->
+        <snackbar/>
     </v-app>
 </template>
 
 <script>
     import NavDrawer from 'components/_includes/menu/NavDrawer.vue'
-
+    import Snackbar from 'components/_includes/notif/Snackbar.vue'
 
     export default {
         components: {
             NavDrawer,
+            Snackbar,
         },
         data() {
             return {
