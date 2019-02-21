@@ -36,19 +36,11 @@
             HelpDeskCreateTask,
             HelpDeskCard,
         },
-        created(){
-            this.$resource('/api/helpdesk/').get()
-                .then(res =>
-                    res.json().then(
-                        data => this.tasks = data
-                    ))
-        },
         computed: {
             ...mapGetters(['sortedHelpDeskTasks']),
         },
         data: () => ({
             openCreateTaskDialog: false,
-            tasks: [],
         })
     }
 </script>

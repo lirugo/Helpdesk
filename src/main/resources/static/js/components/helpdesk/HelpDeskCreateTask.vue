@@ -92,6 +92,7 @@
 
 <script>
     import moment from 'moment'
+    import {mapActions} from 'vuex'
     import {mapMutations} from 'vuex'
 
     export default {
@@ -133,15 +134,15 @@
             },
         },
         methods: {
+            ...mapActions(['addHelpDeskTaskAction']),
             store(){
-                this.$resource('/api/helpdesk/store').save({}, this.task)
-                    .then(res => {
-                        console.log(res)
-                    })
-                    .finally(() => {
-                        this.dialog = false
-                    })
-
+                this.addHelpDeskTaskAction(this.task)
+                this.dialog = false
+                this.task.title = ''
+                this.task.description = ''
+                this.task.priority = ''
+                this.task.problemWith = ''
+                this.task.desireDateOfExecution = new Date().toISOString().substr(0, 10)
             }
         }
     }

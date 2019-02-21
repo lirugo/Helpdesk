@@ -21,7 +21,7 @@ public class HelpDeskController {
         return helpDeskTaskRepo.findAll();
     }
 
-    @PostMapping("store")
+    @PostMapping
     public HelpDeskTask store(
             @AuthenticationPrincipal User user,
             @RequestBody HelpDeskTask task
