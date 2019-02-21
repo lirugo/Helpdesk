@@ -6,6 +6,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
+        profile: '',
         helpDeskTasks: [],
     },
     getters: {
@@ -20,19 +21,31 @@ export default new Vuex.Store({
                 ...state.helpDeskTasks,
                 helpDeskTask
             ]
+        },
+        getProfileMutation(state, profile){
+            state.profile = profile
         }
     },
     actions: {
+        getProfileAction({ commit }){
+            Vue.http.get("/api/auth/profile/")
+                .then((response) => {
+                    commit("getProfileMutation", response.body)
+                })
+                .catch((error => {
+                    console.log(error.statusText)
+                }))
+        },
         getHelpDeskTasksAction({ commit }){
             return new Promise((resolve, reject) => {
                 Vue.http.get("/api/helpdesk/")
                     .then((response) => {
-                        commit("getHelpDeskTasksMutation", response.body);
+                        commit("getHelpDeskTasksMutation", response.body)
                     })
                     .catch((error => {
-                        console.log(error.statusText);
-                    }));
-            });
+                        console.log(error.statusText)
+                    }))
+            })
         },
         addHelpDeskTaskAction({ commit }, helpDeskTask) {
             return new Promise((resolve, reject) => {
@@ -41,9 +54,9 @@ export default new Vuex.Store({
                         commit("addHelpDeskTaskMutation", response.body)
                     })
                     .catch((error => {
-                        console.log(error.statusText);
-                    }));
-            });
+                        console.log(error.statusText)
+                    }))
+            })
         }
     }
 

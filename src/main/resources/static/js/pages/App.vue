@@ -31,7 +31,8 @@
 
 <script>
     import NavDrawer from 'components/_includes/menu/NavDrawer.vue'
-    import {mapActions} from "vuex";
+    import {mapActions} from "vuex"
+    import { mapState } from 'vuex'
 
     export default {
         components: {
@@ -40,11 +41,16 @@
         data() {
             return {
                 messages: [],
-                profile: frontendData.profile,
             }
         },
-        methods: mapActions(['getHelpDeskTasksAction']),
+        methods: mapActions(['getHelpDeskTasksAction', 'getProfileAction']),
+        computed: {
+            ...mapState(['profile'])
+        },
         created(){
+            //Go to api and get profile
+            this.$store.dispatch('getProfileAction')
+            //Go to api and get help desk task
             this.$store.dispatch('getHelpDeskTasksAction')
         }
     }

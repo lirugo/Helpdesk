@@ -25,11 +25,11 @@
 </template>
 
 <script>
+    import { mapState } from 'vuex'
+
     export default {
-        data(){
-            return {
-                profile: frontendData.profile
-            }
+        computed: {
+            ...mapState(['profile'])
         }
     }
 </script>
