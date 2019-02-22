@@ -6,6 +6,7 @@ import com.helpdesk.repo.helpdesk.HelpDeskTaskRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,7 @@ public class HelpDeskController {
     public Page<HelpDeskTask> all(
             @RequestParam(value = "page", defaultValue = "0") int page
     ){
-        return helpDeskTaskRepo.findAll(PageRequest.of(page,5));
+        return helpDeskTaskRepo.findAll(PageRequest.of(page, 6, Sort.by(Sort.Direction.DESC, "id")));
     }
 
     @GetMapping("{id}")
