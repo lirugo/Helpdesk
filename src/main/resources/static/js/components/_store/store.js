@@ -40,7 +40,7 @@ export default new Vuex.Store({
             return new Promise((resolve, reject) => {
                 Vue.http.get("/api/helpdesk/")
                     .then((response) => {
-                        commit("getHelpDeskTasksMutation", response.body)
+                        commit("getHelpDeskTasksMutation", response.body.content)
                     })
                     .catch((error => {
                         console.log(error.statusText)
