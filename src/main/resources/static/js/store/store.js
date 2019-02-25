@@ -6,7 +6,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        profile: '',
+        profile: frontendData.profile,
         helpDesk: {
             tasks: [],
             pagination: {
@@ -17,19 +17,16 @@ export default new Vuex.Store({
         },
     },
     getters: {
+        getProfileGetter: state => state.profile,
         sortedHelpDeskTasksGetter: state => state.helpDesk.tasks.sort((a,b) => -(a.id -b.id)),
         helpDeskPaginationGetter: state => state.helpDesk.pagination
     },
     mutations: {
-        getProfileMutation(state, profile){
-            state.profile = profile
-        },
         getHelpDeskTasksMutation(state, helpDesk) {
             state.helpDesk.tasks = helpDesk.content
             state.helpDesk.pagination.page = helpDesk.number + 1
             state.helpDesk.pagination.totalPages = helpDesk.totalPages
             state.helpDesk.pagination.totalElements = helpDesk.totalElements
-            console.log(helpDesk)
         },
         addHelpDeskTaskMutation(state, helpDeskTask) {
             state.helpDesk.tasks = [
@@ -39,15 +36,6 @@ export default new Vuex.Store({
         },
     },
     actions: {
-        getProfileAction({ commit }){
-            Vue.http.get("/api/auth/profile/")
-                .then((response) => {
-                    commit("getProfileMutation", response.body)
-                })
-                .catch((error => {
-                    console.log(error.statusText)
-                }))
-        },
         getHelpDeskTasksAction({ commit }, page = 0){
             return new Promise((resolve, reject) => {
                 Vue.http.get("/api/helpdesk?page=" + page)

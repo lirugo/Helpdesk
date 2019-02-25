@@ -21,7 +21,7 @@ public class HelpDeskController {
     public Page<HelpDeskTask> all(
             @RequestParam(value = "page", defaultValue = "0") int page
     ){
-        return helpDeskTaskRepo.findAll(PageRequest.of(page, 6, Sort.by(Sort.Direction.DESC, "id")));
+        return helpDeskTaskRepo.findAll(PageRequest.of(page, 9, Sort.by(Sort.Direction.DESC, "id")));
     }
 
     @GetMapping("{id}")

@@ -31,27 +31,30 @@
 
 <script>
     import NavDrawer from 'components/_includes/menu/NavDrawer.vue'
-    import {mapActions} from "vuex"
+    import { mapActions } from "vuex"
     import { mapState } from 'vuex'
+    import { defineAbilityFor } from 'ability/ability'
 
     export default {
         components: {
             NavDrawer,
         },
-        data() {
-            return {
-                messages: [],
-            }
+        methods: {
+            ...mapActions(['getHelpDeskTasksAction']),
         },
-        methods: mapActions(['getHelpDeskTasksAction', 'getProfileAction']),
         computed: {
             ...mapState(['profile'])
         },
         created(){
-            //Go to api and get profile
-            this.$store.dispatch('getProfileAction')
-            //Go to api and get help desk task
-            this.$store.dispatch('getHelpDeskTasksAction')
+            //If user sign in
+            if(this.profile) {
+                //Go to api and get help desk task
+                this.$store.dispatch('getHelpDeskTasksAction')
+                //Update CASL
+                this.$ability.update(
+                    defineAbilityFor(this.profile.roles[0]).rules
+                )
+            }
         }
     }
 </script>

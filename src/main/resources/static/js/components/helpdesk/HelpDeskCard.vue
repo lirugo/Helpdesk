@@ -48,9 +48,11 @@
         <!--Actions-->
         <v-card-actions>
             <v-spacer></v-spacer>
+            <div v-if="$can('update', 'Help Desk Task')">
             <v-btn flat color="orange">Open</v-btn>
             <v-btn flat color="orange">Message</v-btn>
             <v-btn flat color="green">Done</v-btn>
+            </div>
         </v-card-actions>
     </v-card>
     </transition>
