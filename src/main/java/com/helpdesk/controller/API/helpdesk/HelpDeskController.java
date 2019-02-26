@@ -3,6 +3,7 @@ package com.helpdesk.controller.API.helpdesk;
 import com.helpdesk.domain.helpdesk.HelpDeskTask;
 import com.helpdesk.domain.user.User;
 import com.helpdesk.repo.helpdesk.HelpDeskTaskRepo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,6 +28,17 @@ public class HelpDeskController {
     @GetMapping("{id}")
     public HelpDeskTask find(@PathVariable("id") HelpDeskTask helpDeskTask){
         return helpDeskTask;
+    }
+
+    @PutMapping("{id}")
+    public HelpDeskTask update(
+            @PathVariable("id") HelpDeskTask helpDeskTaskDB,
+            @RequestBody HelpDeskTask helpDeskTask
+    )
+    {
+        BeanUtils.copyProperties(helpDeskTask, helpDeskTaskDB, "id");
+
+        return helpDeskTaskRepo.save(helpDeskTaskDB);
     }
 
     @PostMapping

@@ -3,6 +3,7 @@
             :mini-variant.sync="mini"
             enable-resize-watcher
             app
+            class="grey lighten-2"
     >
         <v-toolbar flat class="transparent">
             <v-list class="pa-0">

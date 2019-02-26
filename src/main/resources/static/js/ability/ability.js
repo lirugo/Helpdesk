@@ -1,12 +1,12 @@
 import { AbilityBuilder, Ability } from '@casl/ability'
 
-// инициализируем ability, но роли еще не известны
+//Init ability
 export const ability =
     AbilityBuilder.define(can => {
         // can('load', 'all');
     });
 
-// функция для создания правил, воспользуемся когда нам потребуется
+//Update ability
 export function defineAbilityFor(role) {
     const { rules, can, cannot } = AbilityBuilder.extract();
 
@@ -16,6 +16,9 @@ export function defineAbilityFor(role) {
             break;
         case 'ADMIN':
             can('update', 'Help Desk Task');
+            break;
+        default :
+            can('read', 'News');
             break;
     }
 

@@ -1,8 +1,27 @@
 <template>
     <transition name="slide-fade">
     <v-card class="ma-2">
+        <!--Chips-->
+        <div class="ml-2 pt-2">
+            <!--Status-->
+            <v-chip label color="gray" outline text-color="green" v-if="task.done">
+                <v-icon left>done_outline</v-icon>DONE
+            </v-chip>
+            <v-chip label color="gray" outline text-color="gray" v-else>
+                <v-icon left>refresh</v-icon>IN PROGRESS
+            </v-chip>
+            <!--Priority-->
+            <v-chip label color="orange darken-3" outline text-color="orange darken-3">
+                <v-icon left>error</v-icon>{{task.priority}}
+            </v-chip>
+            <!--Device-->
+            <v-chip label color="gray" outline text-color="gray">
+                <v-icon left>perm_device_information</v-icon>{{task.problemWith}}
+            </v-chip>
+        </div>
+
         <!--Title time description-->
-        <v-card-title class="pb-0">
+        <v-card-title class="pb-0 pt-0">
             <div>
                 <h3 class="headline" v-text="task.title"></h3>
                 <span class="grey--text">{{task.createdAt | moment('DD-MM-YYYY')}}</span><br>
@@ -26,33 +45,17 @@
             </v-list-tile>
         </v-card-actions>
 
-        <!--Chips-->
-        <div class="ml-3">
-            <!--Status-->
-            <v-chip label color="gray" outline text-color="green" v-if="task.done">
-                <v-icon left>done_outline</v-icon>DONE
-            </v-chip>
-            <v-chip label color="gray" outline text-color="gray" v-else>
-                <v-icon left>refresh</v-icon>IN PROGRESS
-            </v-chip>
-            <!--Priority-->
-            <v-chip label color="orange darken-3" outline text-color="orange darken-3">
-                <v-icon left>error</v-icon>{{task.priority}}
-            </v-chip>
-            <!--Device-->
-            <v-chip label color="gray" outline text-color="gray">
-                <v-icon left>perm_device_information</v-icon>{{task.problemWith}}
-            </v-chip>
-        </div>
-
         <!--Actions-->
         <v-card-actions>
+            <v-btn flat icon color="grey">
+                <v-icon>visibility</v-icon>
+            </v-btn>
             <v-spacer></v-spacer>
-            <div v-if="$can('update', 'Help Desk Task')">
-            <v-btn flat color="orange">Open</v-btn>
-            <v-btn flat color="orange">Message</v-btn>
-            <v-btn flat color="green">Done</v-btn>
-            </div>
+            <can I="update" a="Help Desk Task">
+                <v-btn flat icon color="green" v-if="!task.done" @click="markAsDone()">
+                    <v-icon>done</v-icon>
+                </v-btn>
+            </can>
         </v-card-actions>
     </v-card>
     </transition>
@@ -61,6 +64,13 @@
 <script>
     export default {
         props: ['task'],
+        methods: {
+            markAsDone(){
+                this.task.done = true
+                this.$resource('/api/helpdesk/' + this.task.id).update(this.task.id, this.task)
+                    .then(res => console.log(res))
+            }
+        }
     }
 </script>
 
