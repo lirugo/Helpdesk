@@ -51,7 +51,11 @@
                 <v-icon>visibility</v-icon>
             </v-btn>
             <v-spacer></v-spacer>
+            <!--For Admin-->
             <can I="update" a="Help Desk Task">
+                <v-btn flat icon color="red" @click="deleteTask()">
+                    <v-icon>delete</v-icon>
+                </v-btn>
                 <v-btn flat icon color="green" v-if="!task.done" @click="markAsDone()">
                     <v-icon>done</v-icon>
                 </v-btn>
@@ -62,19 +66,23 @@
 </template>
 
 <script>
+    import { mapActions } from 'vuex'
     export default {
         props: ['task'],
         methods: {
+            ...mapActions(['removeHelpDeskTaskMutation']),
             markAsDone(){
                 this.task.done = true
                 this.$resource('/api/helpdesk/' + this.task.id).update(this.task.id, this.task)
-                    .then(res => console.log(res))
+            },
+            deleteTask(){
+                this.removeHelpDeskTaskMutation(this.task)
             }
         }
     }
 </script>
 
-<style>
+<style scoped>
     .slide-fade-enter-active {
         transition: all .3s ease;
     }

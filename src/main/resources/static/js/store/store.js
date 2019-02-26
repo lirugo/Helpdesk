@@ -34,6 +34,16 @@ export default new Vuex.Store({
                 helpDeskTask
             ]
         },
+        removeHelpDeskTaskMutation(state, task) {
+            const deletionIndex = state.helpDesk.tasks.findIndex(item => item.id === task.id)
+
+            if (deletionIndex > -1) {
+                state.helpDesk.tasks = [
+                    ...state.helpDesk.tasks.slice(0, deletionIndex),
+                    ...state.helpDesk.tasks.slice(deletionIndex + 1)
+                ]
+            }
+        },
     },
     actions: {
         getHelpDeskTasksAction({ commit }, page = 0){
@@ -53,6 +63,17 @@ export default new Vuex.Store({
                 Vue.http.post("/api/helpdesk", helpDeskTask)
                     .then((response) => {
                         commit("addHelpDeskTaskMutation", response.body)
+                    })
+                    .catch((error => {
+                        console.log(error.statusText)
+                    }))
+            })
+        },
+        removeHelpDeskTaskMutation({ commit }, task) {
+            return new Promise((resolve, reject) => {
+                Vue.http.delete("/api/helpdesk/" + task.id, task.id)
+                    .then((response) => {
+                        commit("removeHelpDeskTaskMutation", task)
                     })
                     .catch((error => {
                         console.log(error.statusText)

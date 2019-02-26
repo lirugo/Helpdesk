@@ -41,8 +41,15 @@ public class HelpDeskController {
     )
     {
         BeanUtils.copyProperties(helpDeskTask, helpDeskTaskDB, "id");
-
         return helpDeskTaskRepo.save(helpDeskTaskDB);
+    }
+
+    @DeleteMapping("{id}")
+    public void delete(
+            @PathVariable("id") HelpDeskTask helpDeskTask
+    )
+    {
+        helpDeskTaskRepo.delete(helpDeskTask);
     }
 
     @PostMapping

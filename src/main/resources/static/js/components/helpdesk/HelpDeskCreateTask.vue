@@ -92,8 +92,12 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" flat @click="dialog = false">Close</v-btn>
-                    <v-btn color="blue darken-1" flat @click="store">Save</v-btn>
+                    <v-btn color="red" flat icon @click="dialog = false">
+                        <v-icon>close</v-icon>
+                    </v-btn>
+                    <v-btn color="green" class="mr-3" flat icon @click="store">
+                        <v-icon>save</v-icon>
+                    </v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -153,6 +157,7 @@
                         //Send task to api
                         this.addHelpDeskTaskAction(this.task)
                         //Clear form
+                        this.$validator.reset()
                         this.dialog = false
                         this.task.title = ''
                         this.task.description = ''
