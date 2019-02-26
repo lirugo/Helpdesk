@@ -3,6 +3,7 @@ package com.helpdesk.controller.API.helpdesk;
 import com.helpdesk.domain.helpdesk.HelpDeskTask;
 import com.helpdesk.domain.user.User;
 import com.helpdesk.repo.helpdesk.HelpDeskTaskRepo;
+import com.helpdesk.service.MailSender;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +18,9 @@ public class HelpDeskController {
 
     @Autowired
     private HelpDeskTaskRepo helpDeskTaskRepo;
+
+    @Autowired
+    private MailSender mailSender;
 
     @GetMapping
     public Page<HelpDeskTask> all(
@@ -47,6 +51,7 @@ public class HelpDeskController {
             @RequestBody HelpDeskTask task
            ){
 
+        mailSender.send(user.getEmail(), "Help Desk", "Hello.\n We have received your task.\n Our IT specialists deal with it.\n Expect an answer.\n Thanks for contacting us.");
         return helpDeskTaskRepo.save(task);
     }
 }

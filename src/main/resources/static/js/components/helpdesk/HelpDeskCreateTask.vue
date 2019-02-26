@@ -6,7 +6,7 @@
                 <v-card-text class="pb-0">
                     <v-container grid-list-md pb-0>
                         <v-layout wrap>
-                            <span class="headline">Create new appeal to Help Desk</span>
+                            <span class="headline">Create new task to Help Desk</span>
                             <!--Title-->
                             <v-flex xs12>
                                 <v-text-field label="Title"
