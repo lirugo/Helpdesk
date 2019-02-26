@@ -33,7 +33,7 @@
         created(){
             //If user sign in
             if(this.profile) {
-                //Go to api and get help desk task
+                //Go to api and get help desk tasks
                 this.$store.dispatch('getHelpDeskTasksAction')
                 //Update CASL
                 this.$ability.update(

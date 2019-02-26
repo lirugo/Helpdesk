@@ -9,11 +9,14 @@
                             <span class="headline">Create new appeal to Help Desk</span>
                             <!--Title-->
                             <v-flex xs12>
-                                <v-text-field label="Title" required
+                                <v-text-field label="Title"
                                               v-model="task.title"
                                               name="title"
                                               hint="Write title for your problem"
                                               counter="100"
+                                              v-validate="'required|max:100'"
+                                              :error-messages="errors.collect('title')"
+                                              required
                                 ></v-text-field>
                             </v-flex>
                             <!--Description-->
@@ -26,6 +29,9 @@
                                         auto-grow
                                         rows="1"
                                         counter="500"
+                                        v-validate="'required|max:500'"
+                                        :error-messages="errors.collect('description')"
+                                        required
                                 ></v-textarea>
                             </v-flex>
                             <!--Priority-->
@@ -37,6 +43,8 @@
                                         item-text="name"
                                         label="Priority"
                                         name="priority"
+                                        v-validate="'required'"
+                                        :error-messages="errors.collect('priority')"
                                         required
                                 ></v-select>
                             </v-flex>
@@ -49,6 +57,8 @@
                                         item-text="name"
                                         label="Problem with"
                                         name="problem_with"
+                                        v-validate="'required'"
+                                        :error-messages="errors.collect('problem_with')"
                                         required
                                 ></v-select>
                             </v-flex>
@@ -93,10 +103,12 @@
 <script>
     import moment from 'moment'
     import {mapActions} from 'vuex'
-    import {mapMutations} from 'vuex'
 
     export default {
         props: ['openCreateTaskDialog'],
+        $_veeValidate: {
+            validator: 'new'
+        },
         data: function() {
             return {
                 dialog: this.openCreateTaskDialog,
@@ -136,13 +148,19 @@
         methods: {
             ...mapActions(['addHelpDeskTaskAction']),
             store(){
-                this.addHelpDeskTaskAction(this.task)
-                this.dialog = false
-                this.task.title = ''
-                this.task.description = ''
-                this.task.priority = ''
-                this.task.problemWith = ''
-                this.task.desireDateOfExecution = new Date().toISOString().substr(0, 10)
+                this.$validator.validate().then((result) => {
+                    if (result) {
+                        //Send task to api
+                        this.addHelpDeskTaskAction(this.task)
+                        //Clear form
+                        this.dialog = false
+                        this.task.title = ''
+                        this.task.description = ''
+                        this.task.priority = ''
+                        this.task.problemWith = ''
+                        this.task.desireDateOfExecution = new Date().toISOString().substr(0, 10)
+                    }
+                })
             }
         }
     }

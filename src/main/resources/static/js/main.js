@@ -9,9 +9,11 @@ import App from 'pages/App.vue'
 import router from 'router/router'
 import { abilitiesPlugin } from '@casl/vue'
 import { Can } from '@casl/vue'
+import VeeValidate from 'vee-validate'
 
 Vue.component('Can', Can)
 
+Vue.use(VeeValidate)
 Vue.use(abilitiesPlugin)
 Vue.use(Vuetify)
 Vue.use(VueResource)
